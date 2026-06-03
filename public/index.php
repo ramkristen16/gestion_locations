@@ -91,7 +91,7 @@ switch ($page) {
             'libres'            => count($db->select('id')->from('appartements')->where("statut='Libre'")->execute()),
             'occupes'           => count($db->select('id')->from('appartements')->where("statut='Occupé'")->execute()),
             'total_locs'        => count($db->getAll('locataires')),
-            'blacklistes'       => count($db->select('id')->from('locataires')->where("blacklisté=1")->execute()),
+            'blacklistes'       => count($db->select('id')->from('locataires')->where("blackliste=1")->execute()),
             'contrats_en_cours' => count($db->select('id')->from('contrats')->where("statut_contrat IN ('En cours','Prolongé')")->execute()),
             'contrats_termines' => count($db->select('id')->from('contrats')->where("statut_contrat='Terminé' AND MONTH(date_sortie_reelle)=MONTH(NOW())")->execute()),
             'loyers_mois'       => (float)($db->select('SUM(montant_paye) AS t')->from('paiements')->where("MONTH(date_paiement)=MONTH(NOW()) AND YEAR(date_paiement)=YEAR(NOW())")->execute()[0]['t'] ?? 0),

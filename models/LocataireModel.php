@@ -41,12 +41,12 @@ class LocataireModel {
     }
 
     public function create(array $data): bool {
-        $data['numero_locataire'] = $this->genererNumero();
-        $data['date_inscription'] = date('Y-m-d');
-        $data['statut_locataire'] = 'actif';
-        $data['blacklisté'] = 0;
-        return $this->db->insert('locataires', $data);
-    }
+    $data['numero_locataire'] = $this->genererNumero();
+    $data['date_inscription'] = date('Y-m-d');
+    $data['statut_locataire'] = 'actif';
+    $data['blackliste'] = 0;   // sans accent
+    return $this->db->insert('locataires', $data);
+}
 
     public function update(int $id, array $data): bool {
         return $this->db->update('locataires', $id, $data);
@@ -54,8 +54,8 @@ class LocataireModel {
 
     public function blacklister(int $id): bool {
         return $this->db->update('locataires', $id, [
-            'blacklisté' => 1,
-            'statut_locataire' => 'blacklisté'
+            'blackliste' => 1,
+            'statut_locataire' => 'blackliste'
         ]);
     }
 
@@ -70,7 +70,7 @@ class LocataireModel {
     // Locataires avec contrat actif impayé > 60 jours → Blacklist auto
     public function blacklisterImpayes(): int {
         $pdo = $this->db->getPDO();
-        $sql = "UPDATE locataires SET blacklisté=1, statut_locataire='blacklisté'
+        $sql = "UPDATE locataires SET blackliste=1, statut_locataire='blackliste'
                 WHERE id IN (
                     SELECT DISTINCT c.id_locataire FROM contrats c
                     JOIN paiements p ON p.id_contrat = c.id

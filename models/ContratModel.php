@@ -73,9 +73,9 @@ class ContratModel {
             $errors[] = "L'appartement n'est pas Libre.";
         }
 
-        $locRows = $this->db->select('blacklisté')->from('locataires')
+        $locRows = $this->db->select('blackliste')->from('locataires')
             ->where('id = :id', ['id' => $data['id_locataire']])->execute();
-        if (empty($locRows) || $locRows[0]['blacklisté']) {
+        if (empty($locRows) || $locRows[0]['blackliste']) {
             $errors[] = "Le locataire est Blacklisté.";
         }
 

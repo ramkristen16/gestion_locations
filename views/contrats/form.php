@@ -16,7 +16,7 @@
             <select name="id_locataire" required style="width:100%;padding:.7rem 1rem;background:var(--fond-input);border:1px solid var(--bordure);color:var(--texte);border-radius:.5rem">
                 <option value="">-- Choisir --</option>
                 <?php foreach ($locataires as $l): ?>
-                    <?php if ($l['blacklisté']) continue; ?>
+                    <?php if ($l['blackliste']) continue; ?>
                     <option value="<?= $l['id'] ?>" <?= ($data['id_locataire'] ?? 0) == $l['id'] ? 'selected' : '' ?>>
                         <?= htmlspecialchars($l['prenom'] . ' ' . $l['nom'] . ' — ' . $l['telephone']) ?>
                     </option>
