@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS locataires (
     piece_identite VARCHAR(50) NOT NULL,   -- CIN ou Passport
     numero_locataire VARCHAR(20) NOT NULL UNIQUE,
     date_inscription DATE NOT NULL DEFAULT (CURDATE()),
-    statut_locataire ENUM('actif','ancien','blacklisté') NOT NULL DEFAULT 'actif',
-    blacklisté TINYINT(1) NOT NULL DEFAULT 0
+    statut_locataire ENUM('actif','ancien','blackliste') NOT NULL DEFAULT 'actif',
+    ALTER TABLE locataires CHANGE `blacklisté` `blackliste` TINYINT(1) NOT NULL DEFAULT 0;
 ) ENGINE=InnoDB;
 
 -- TABLE APPARTEMENTS

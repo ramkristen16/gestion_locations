@@ -17,7 +17,7 @@
 <div class="grid">
 <?php foreach ($locataires as $l): ?>
     <div class="card">
-        <?php if ($l['blacklisté']): ?>
+        <?php if ($l['blackliste']): ?>
             <span style="background:var(--rouge);color:#fff;border-radius:.3rem;padding:.2rem .5rem;font-size:.75rem;width:fit-content">🚫 BLACKLISTÉ</span>
         <?php endif; ?>
         <h3><?= htmlspecialchars($l['prenom'] . ' ' . $l['nom']) ?></h3>
@@ -28,7 +28,7 @@
         <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:auto;">
             <a href="?page=locataires&action=voir&id=<?= $l['id'] ?>" class="btn-ghost">Voir</a>
             <a href="?page=locataires&action=modifier&id=<?= $l['id'] ?>" class="btn-ghost">✏️</a>
-            <?php if (!$l['blacklisté']): ?>
+            <?php if (!$l['blackliste']): ?>
                 <a href="?page=locataires&action=blacklister&id=<?= $l['id'] ?>"
                    onclick="return confirm('Blacklister ce locataire ?')" class="btn-danger" style="font-size:.78rem;padding:.4rem .7rem">🚫</a>
             <?php endif; ?>
