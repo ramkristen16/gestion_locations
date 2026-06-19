@@ -2,7 +2,7 @@
 
 <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
     <a href="?page=appartements" class="btn-ghost">← Retour</a>
-    <h2>🏢 <?= htmlspecialchars($appartement['designation']) ?></h2>
+    <h2> <?= htmlspecialchars($appartement['designation']) ?></h2>
 </div>
 
 <div class="section-box" style="margin-top:0">
@@ -16,7 +16,7 @@
 </div>
 
 <div class="section-box">
-    <h2>📋 Historique des locataires</h2>
+    <h2> Historique des locataires</h2>
     <?php if (empty($historique)): ?>
         <p style="color:var(--texte-muted)">Aucun locataire pour cet appartement.</p>
     <?php else: ?>

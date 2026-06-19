@@ -1,7 +1,7 @@
 <?php $pageTitle = 'Contrats'; include 'views/layout_top.php'; ?>
 
 <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
-    <h2>📄 Contrats de location</h2>
+    <h2>Contrats de location</h2>
     <a href="?page=contrats&action=creer" class="btn">+ Nouveau contrat</a>
 </div>
 

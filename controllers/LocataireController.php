@@ -38,7 +38,14 @@ class LocataireController {
             ];
             if (!$data['nom'])           $erreurs[] = 'Nom requis.';
             if (!$data['prenom'])        $erreurs[] = 'Prénom requis.';
-            if (!$data['telephone'])     $erreurs[] = 'Téléphone requis.';
+            if (!$data['telephone'])     $erreurs[] = 'Télephone requis.';
+            if (!ctype_digit($telephone)) {
+                echo("Erreur: Telephone invzlide");
+            }
+            if (!ctype_digit($piece_identite)) {
+                echo("Erreur: piece invzlide");
+            }
+
             if (!filter_var($data['email'], FILTER_VALIDATE_EMAIL)) $erreurs[] = 'Email invalide.';
             if (!$data['piece_identite'])$erreurs[] = 'Pièce d\'identité requise.';
 

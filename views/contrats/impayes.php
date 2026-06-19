@@ -2,13 +2,13 @@
 
 <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
     <a href="?page=contrats" class="btn-ghost">← Retour</a>
-    <h2>⚠️ Loyers impayés / partiels</h2>
+    <h2> Loyers impayés / partiels</h2>
 </div>
 
 <?php if (empty($impayes)): ?>
-    <div class="alert-success">✅ Aucun impayé. Tous les loyers sont à jour.</div>
+    <div class="alert-success">Aucun impayé. Tous les loyers sont à jour.</div>
 <?php else: ?>
-    <div class="alert-danger">⚠️ <?= count($impayes) ?> enregistrement(s) impayé(s) ou partiel(s).</div>
+    <div class="alert-danger"> <?= count($impayes) ?> enregistrement(s) impayé(s) ou partiel(s).</div>
     <table style="width:100%;border-collapse:collapse;font-size:.88rem;margin-top:1rem;">
         <thead>
             <tr style="border-bottom:2px solid var(--bordure)">

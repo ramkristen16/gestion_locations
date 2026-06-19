@@ -15,7 +15,6 @@ class ContratModel {
         return $prefix . str_pad($seq, 4, '0', STR_PAD_LEFT);
     }
 
-    // Calculer durée en mois : CEIL((date_sortie - date_entree) / 30.44)
     private function calculerDureeMois(string $dateEntree, string $dateSortie): int {
         $d1 = new DateTime($dateEntree);
         $d2 = new DateTime($dateSortie);

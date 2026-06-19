@@ -25,7 +25,8 @@ include 'views/layout_top.php';
         </div>
         <div class="form-group">
             <label>Téléphone</label>
-            <input type="tel" name="telephone" value="<?= htmlspecialchars($data['telephone'] ?? '') ?>" required>
+            <input type="number_format" name="telephone" value="<?= htmlspecialchars($data['telephone'] ?? '') ?>" required>
+            <p id= "eror"></p>
         </div>
         <div class="form-group">
             <label>Email</label>
@@ -37,10 +38,12 @@ include 'views/layout_top.php';
         </div>
         <div class="form-group">
             <label>Pièce d'identité (CIN / Passeport)</label>
-            <input type="text" name="piece_identite" value="<?= htmlspecialchars($data['piece_identite'] ?? '') ?>" required>
+            <input type="number_format" name="piece_identite" value="<?= htmlspecialchars($data['piece_identite'] ?? '') ?>" required>
         </div>
         <button type="submit" class="btn"><?= $isModif ? 'Enregistrer' : 'Ajouter le locataire' ?></button>
     </form>
 </div>
+
+
 
 <?php include 'views/layout_bottom.php'; ?>

@@ -2,7 +2,7 @@
 
 <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;">
     <a href="?page=contrats" class="btn-ghost">← Retour</a>
-    <h2>📄 <?= htmlspecialchars($contrat['numero_contrat']) ?></h2>
+    <h2> <?= htmlspecialchars($contrat['numero_contrat']) ?></h2>
 </div>
 
 <div class="section-box" style="margin-top:0">
@@ -37,8 +37,8 @@
         <a href="?page=contrats&action=resilier&id=<?= $contrat['id'] ?>" class="btn-danger">✕ Résilier</a>
         <a href="?page=contrats&action=terminer&id=<?= $contrat['id'] ?>"
            onclick="return confirm('Terminer ce contrat définitivement ?')"
-           class="btn-ghost">✔ Terminer</a>
-        <a href="?page=paiements&action=enregistrer&id_contrat=<?= $contrat['id'] ?>" class="btn-success">💰 Enregistrer paiement</a>
+           class="btn-ghost">Terminer</a>
+        <a href="?page=paiements&action=enregistrer&id_contrat=<?= $contrat['id'] ?>" class="btn-success"> Enregistrer paiement</a>
     </div>
     <?php endif; ?>
 </div>

@@ -1,7 +1,7 @@
 <?php $pageTitle = 'Appartements'; include 'views/layout_top.php'; ?>
 
 <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem;">
-    <h2>🏢 Appartements</h2>
+    <h2> Appartements</h2>
     <a href="?page=appartements&action=ajouter" class="btn">+ Ajouter</a>
 </div>
 
@@ -42,6 +42,9 @@
         <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:auto;">
             <a href="?page=appartements&action=voir&id=<?= $a['id'] ?>" class="btn-ghost">Voir</a>
             <a href="?page=appartements&action=modifier&id=<?= $a['id'] ?>" class="btn-ghost">✏️</a>
+            <a href="?page=appartements&action=supprimer&id=<?= $a['id'] ?>"
+                onclick="return confirm('Supprimer cet appartement ?')"
+                class="btn-danger" style="font-size:.78rem;padding:.4rem .7rem">🗑</a>
             <?php if ($a['statut'] === 'Libre'): ?>
                 <a href="?page=contrats&action=creer&id_appartement=<?= $a['id'] ?>" class="btn" style="font-size:.78rem;padding:.4rem .7rem">Louer</a>
             <?php endif; ?>

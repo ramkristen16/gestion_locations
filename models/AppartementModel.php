@@ -1,5 +1,4 @@
 <?php
-// models/AppartementModel.php
 
 class AppartementModel {
     public function __construct(private Database $db) {}
@@ -38,7 +37,6 @@ class AppartementModel {
     }
 
     public function create(array $data): bool {
-        // Règle : caution ≤ 3 × loyer_mensuel
         if ($data['caution'] > 3 * $data['loyer_mensuel']) {
             throw new Exception("La caution ne peut pas dépasser 3 × le loyer mensuel.");
         }
@@ -62,7 +60,6 @@ class AppartementModel {
     }
 
     public function delete(int $id): bool {
-        // Jamais loué : statut = Libre, aucun contrat
         $app = $this->findById($id);
         if (!$app || $app['statut'] !== 'Libre') return false;
         $contrats = $this->db->select('id')->from('contrats')

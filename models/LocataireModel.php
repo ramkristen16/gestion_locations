@@ -1,20 +1,28 @@
 <?php
-// models/LocataireModel.php
 
 class LocataireModel {
     public function __construct(private Database $db) {}
 
-    // Générer un numéro unique : LOC-YYYYMMDD-XXXX
-    public function genererNumero(): string {
-        $prefix = 'LOC-' . date('Ymd') . '-';
-        $rows = $this->db->select('numero_locataire')
-            ->from('locataires')
-            ->where("numero_locataire LIKE :p", ['p' => $prefix . '%'])
-            ->orderBy('numero_locataire', 'DESC')
-            ->execute();
-        $seq = empty($rows) ? 1 : (intval(substr(end($rows)['numero_locataire'], -4)) + 1);
-        return $prefix . str_pad($seq, 4, '0', STR_PAD_LEFT);
-    }
+   public function genererNumeroUnique() {
+    // Crée le préfixe avec la date du jour (ex: LOC-20260603-)
+    $prefixe = 'LOC-' . date('Ymd') . '-';
+    
+    // Compte le nombre de locataires déjà créés aujourd'hui
+    $sql = "SELECT COUNT(*) as total FROM locataires WHERE numero_locataire LIKE :prefixe";
+    
+    // Récupération de l'instance PDO (adaptez $this->db selon votre classe Database)
+    $db = $this->db->getPDO(); // Ou simplement $this->db si c'est directement PDO
+    $stmt = $db->prepare($sql);
+    $stmt->execute(['prefixe' => $prefixe . '%']);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Incrémente de 1 le total trouvé
+    $compteur = $row['total'] + 1;
+    
+    // Génère le numéro final (ex: LOC-20260603-0003)
+    return $prefixe . str_pad($compteur, 4, '0', STR_PAD_LEFT);
+}
+
 
     public function findAll(): array {
         return $this->db->select('*')->from('locataires')->orderBy('nom')->execute();
@@ -32,21 +40,25 @@ class LocataireModel {
     }
 
     // Vérifier unicité téléphone/email
-    public function existsTelOrEmail(string $tel, string $email, int $excludeId = 0): bool {
+    public function existsTelOrEmail(int $tel, string $email, int $excludeId = 0): bool {
         $rows = $this->db->select('id')->from('locataires')
             ->where('(telephone = :t OR email = :e) AND id != :id', 
                     ['t' => $tel, 'e' => $email, 'id' => $excludeId])
             ->execute();
+            if (!preg_match('/^[0-9]+$/', $tel)) {
+                die("Erreur: Telephone incorrecte");
+            }
         return !empty($rows);
     }
 
-    public function create(array $data): bool {
-    $data['numero_locataire'] = $this->genererNumero();
-    $data['date_inscription'] = date('Y-m-d');
-    $data['statut_locataire'] = 'actif';
-    $data['blackliste'] = 0;   // sans accent
+   public function create($data) {
+    // On génère le numéro unique à la volée avant l'insertion
+    $data['numero_locataire'] = $this->genererNumeroUnique();
+    
+    // Votre code existant qui plante à la ligne 46 :
     return $this->db->insert('locataires', $data);
 }
+
 
     public function update(int $id, array $data): bool {
         return $this->db->update('locataires', $id, $data);
@@ -59,7 +71,7 @@ class LocataireModel {
         ]);
     }
 
-    public function changerCoordonnees(int $id, string $telephone, string $email, string $adresse): bool {
+    public function changerCoordonnees(int $id, int $telephone, string $email, string $adresse): bool {
         return $this->db->update('locataires', $id, [
             'telephone' => $telephone,
             'email' => $email,
@@ -67,7 +79,6 @@ class LocataireModel {
         ]);
     }
 
-    // Locataires avec contrat actif impayé > 60 jours → Blacklist auto
     public function blacklisterImpayes(): int {
         $pdo = $this->db->getPDO();
         $sql = "UPDATE locataires SET blackliste=1, statut_locataire='blackliste'
